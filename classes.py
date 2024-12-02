@@ -57,45 +57,53 @@ lib_lang = [
     LibLang(2, 4)
 ]
 
+one_to_many = {}
+for la in langs:
+    one_to_many[la.title] = [(li.title, li.methods_count) for li in libs if li.lang_id == la.id]
+
+many_to_many_temp = [(la.title, li.title)
+                     for la in langs
+                     for li in libs
+                     for lali in lib_lang
+                     if lali.lang_id == la.id and lali.lib_id == li.id]
+
 
 def main():
     """Основная функция"""
-    one_to_many = {}
-    for la in langs:
-        one_to_many[la.title] = [(li.title, li.methods_count) for li in libs if li.lang_id == la.id]
 
     first(one_to_many)
     second(one_to_many)
 
-    many_to_many_temp = [(la.title, li.title)
-                         for la in langs
-                         for li in libs
-                         for lali in lib_lang
-                         if lali.lang_id == la.id and lali.lib_id == li.id]
     third(many_to_many_temp)
+
 
 # задание 1
 def first(one_to_many):
-    print("№1:")
     result = dict(filter(lambda item: len(item[1]) > 0,
                          {key: list(filter(lambda item: str(item[0]).startswith("j"), val)) for key, val
                           in one_to_many.items()}.items()))
-    print(result)
+    return result
 
 
 # задание 2
 def second(one_to_many):
-    print("№2:")
     result = sorted({k: min([val[1] for val in one_to_many[k]]) for k in one_to_many.keys()}.items(),
                     key=lambda item: item[1])
-    print(result)
+    return result
 
 
 # задание 3
 def third(many_to_many):
-    print("№3:")
     result = sorted(many_to_many, key=lambda item: item[1])
-    print(result)
+    return result
+
+
+def getOneToMany():
+    return one_to_many
+
+
+def getManyToMany():
+    return many_to_many_temp
 
 
 if __name__ == '__main__':
