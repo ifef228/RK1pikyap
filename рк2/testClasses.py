@@ -1,6 +1,6 @@
 import unittest
 
-import classes
+from рк1 import classes
 
 
 class TestClass(unittest.TestCase):
